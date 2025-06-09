@@ -1,0 +1,18 @@
+meta {
+  name: Signin
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8080/autorizador/signin
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "identificador": "josequintino@hotmail.com.br",
+    "senha": "@@1234564@@"
+  }
+}

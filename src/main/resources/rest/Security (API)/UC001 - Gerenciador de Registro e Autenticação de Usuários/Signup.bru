@@ -1,0 +1,19 @@
+meta {
+  name: Signup
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8080/autorizador/signup
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "nome": "José Quintinno",
+    "identificador": "josequintino@hotmail.com.br",
+    "senha": "@@1234564@@"
+  }
+}

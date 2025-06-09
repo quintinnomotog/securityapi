@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Security (API)",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

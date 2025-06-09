@@ -1,0 +1,23 @@
+meta {
+  name: Usuário
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:8080/usuario
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzZWN1cml0eWFwaSIsInN1YiI6Impvc2VxdWludGlub0Bob3RtYWlsLmNvbS5iciIsImV4cCI6MTc0OTQ5ODI2N30.AhGzQ8aLeG6ZyxWscAcb9tqtnlgylFJLdN0u2SnUkSw
+}
+
+body:json {
+  {
+    "nome": "José Quintinno",
+    "identificador": "josequintino@hotmail.com.br",
+    "senha": "@@1234564@@"
+  }
+}
