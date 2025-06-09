@@ -32,7 +32,7 @@ public class UsuarioEntity {
     private String senha;
 
     @Column(name = "ACTIVE", nullable = false)
-    private Boolean active;
+    private Boolean active = true;
 
     @CreationTimestamp
     @Column(name = "CREATED_AT", updatable = false)
@@ -47,9 +47,8 @@ public class UsuarioEntity {
 
     public UsuarioEntity() { }
 
-    public UsuarioEntity(String code, Boolean active, LocalDateTime created_at, LocalDateTime updated_at) {
+    public UsuarioEntity(String code, Boolean active) {
         this.code = UUID.randomUUID().toString();
-        this.active = true;
     }
 
     public String getCode() {
