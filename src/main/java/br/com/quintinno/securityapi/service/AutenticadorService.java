@@ -27,15 +27,6 @@ public class AutenticadorService {
     @Autowired
     private TokenService tokenService;
 
-    public ResponseTransfer signin(SigninRequestTransfer signinRequestTransfer) {
-        UsuarioEntity usuarioEntity = this.usuarioRepository.findByIdentificador(signinRequestTransfer.identificador())
-                .orElseThrow(() -> new RuntimeException(MensagemUtility.MENSAGEM_ERROR_01));
-        if (!passwordEncoder.matches(signinRequestTransfer.senha(), usuarioEntity.getSenha())) {
-            throw new RuntimeException(MensagemUtility.MENSAGEM_ERROR_01);
-        }
-        return new ResponseTransfer(usuarioEntity.getNome(), this.tokenService.generateToken(usuarioEntity));
-    }
-
     public ResponseTransfer signup(SignupRequestTransfer signupRequestTransfer) {
         Optional<UsuarioEntity> usuarioEntity = this.usuarioRepository.findByIdentificador(signupRequestTransfer.identificador());
         if (!usuarioEntity.isEmpty()) {
@@ -48,6 +39,15 @@ public class AutenticadorService {
             this.usuarioRepository.save(usuarioEntityNovo);
         String token = this.tokenService.generateToken(usuarioEntityNovo);
         return new ResponseTransfer(usuarioEntityNovo.getNome(), token);
+    }
+
+    public ResponseTransfer signin(SigninRequestTransfer signinRequestTransfer) {
+        UsuarioEntity usuarioEntity = this.usuarioRepository.findByIdentificador(signinRequestTransfer.identificador())
+                .orElseThrow(() -> new RuntimeException(MensagemUtility.MENSAGEM_ERROR_01));
+        if (!passwordEncoder.matches(signinRequestTransfer.senha(), usuarioEntity.getSenha())) {
+            throw new RuntimeException(MensagemUtility.MENSAGEM_ERROR_01);
+        }
+        return new ResponseTransfer(usuarioEntity.getNome(), this.tokenService.generateToken(usuarioEntity));
     }
 
 }
