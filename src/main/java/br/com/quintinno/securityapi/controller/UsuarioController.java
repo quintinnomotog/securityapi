@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UsuarioController {
 
     @GetMapping
-    public ResponseEntity<HashMap> getUsuario() {
-        HashMap hashMap = new HashMap<>();
+    public ResponseEntity<HashMap<String, String>> getUsuario() {
+        HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("mensagem", "Requisição Realizada com Sucesso!");
         return ResponseEntity.ok().body(hashMap);
     }

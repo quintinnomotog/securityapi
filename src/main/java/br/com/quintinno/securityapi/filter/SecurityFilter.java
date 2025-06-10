@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,9 +31,9 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(
-            HttpServletRequest httpServletRequest,
-            HttpServletResponse httpServletResponse,
-            FilterChain filterChain) throws ServletException, IOException {
+            @NonNull HttpServletRequest httpServletRequest,
+            @NonNull HttpServletResponse httpServletResponse,
+            @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         String token = this.recoverToken(httpServletRequest);
         String identificador = this.tokenService.validateToken(token);

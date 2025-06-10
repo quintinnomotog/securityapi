@@ -20,7 +20,7 @@ public class AutorizadorController {
     private AutenticadorService autenticadorService;
 
     @PostMapping("/signin")
-    public ResponseEntity signin(@RequestBody SigninRequestTransfer loginRequestTransfer) {
+    public ResponseEntity<?> signin(@RequestBody SigninRequestTransfer loginRequestTransfer) {
         try {
             return ResponseEntity.ok(this.autenticadorService.signin(loginRequestTransfer));
         } catch (RuntimeException runtimeException) {
@@ -29,7 +29,7 @@ public class AutorizadorController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity register(@RequestBody SignupRequestTransfer signupRequestTransfer) {
+    public ResponseEntity<?> register(@RequestBody SignupRequestTransfer signupRequestTransfer) {
         try {
             return ResponseEntity.ok(this.autenticadorService.signup(signupRequestTransfer));
         } catch (RuntimeException runtimeException) {
