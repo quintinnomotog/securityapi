@@ -3,6 +3,8 @@ create table if not exists tb_usuario (
 	nome varchar(255) not null comment 'Representa nome do usuário',
 	identificador varchar(255) not null comment 'Representa identificador (pode ser e-mail ou telefone) do usuário',
 	senha varchar(255) not null comment 'Representa o hash da senha do usuário',
+	telefone varchar(11) not null comment 'Guarda o telefone do Usuário',
+	data_nascimento date not null comment 'Guarda a data de nascimento do Usuário',
 	active boolean not null default true comment 'Representa a situação do cadastro que pode ser ativo ou inativo',
     created_at datetime not null default current_timestamp comment 'Representa a data de criação do registro',
     updated_at datetime not null default current_timestamp comment 'Representa a data de alteração do registro',

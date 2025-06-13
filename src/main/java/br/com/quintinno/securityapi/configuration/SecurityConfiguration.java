@@ -23,17 +23,17 @@ public class SecurityConfiguration {
     @Autowired
     private SecurityFilter securityFilter;
 
-    private final static String ENDPOINT_LOGIN = "/autorizador/signin";
+    private final static String ENDPOINT_SIGNIN = "/signin";
 
-    private final static String ENDPOINT_REGISTER= "/autorizador/signup";
+    private final static String ENDPOINT_SIGNUP= "/signup";
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, ENDPOINT_LOGIN).permitAll()
-                        .requestMatchers(HttpMethod.POST, ENDPOINT_REGISTER).permitAll()
+                        .requestMatchers(HttpMethod.POST, ENDPOINT_SIGNIN).permitAll()
+                        .requestMatchers(HttpMethod.POST, ENDPOINT_SIGNUP).permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();

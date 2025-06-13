@@ -1,3 +1,11 @@
 package br.com.quintinno.securityapi.transfer;
 
-public record SignupRequestTransfer(String identificador, String senha, String nome) { }
+import java.time.LocalDate;
+
+public record SignupRequestTransfer(
+    String nome, 
+    String identificador,
+    String senha,
+    String telefone, 
+    LocalDate dataNascimento
+) { }

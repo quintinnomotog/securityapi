@@ -8,32 +8,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.quintinno.securityapi.service.AutenticadorService;
+import br.com.quintinno.securityapi.service.SigninService;
 import br.com.quintinno.securityapi.transfer.SigninRequestTransfer;
-import br.com.quintinno.securityapi.transfer.SignupRequestTransfer;
 
 @RestController
-@RequestMapping("/autorizador")
-public class AutorizadorController {
+@RequestMapping("/signin")
+public class SigninController {
 
     @Autowired
-    private AutenticadorService autenticadorService;
+    private SigninService signinService;
 
-    @PostMapping("/signin")
+    @PostMapping
     public ResponseEntity<?> signin(@RequestBody SigninRequestTransfer loginRequestTransfer) {
         try {
-            return ResponseEntity.ok(this.autenticadorService.signin(loginRequestTransfer));
+            return ResponseEntity.ok(this.signinService.signin(loginRequestTransfer));
         } catch (RuntimeException runtimeException) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(runtimeException.getMessage());
-        }
-    }
-
-    @PostMapping("/signup")
-    public ResponseEntity<?> register(@RequestBody SignupRequestTransfer signupRequestTransfer) {
-        try {
-            return ResponseEntity.ok(this.autenticadorService.signup(signupRequestTransfer));
-        } catch (RuntimeException runtimeException) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(runtimeException.getMessage());
         }
     }
 

@@ -1,5 +1,6 @@
 package br.com.quintinno.securityapi.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -30,6 +31,12 @@ public class UsuarioEntity {
 
     @Column(name = "SENHA", nullable = false)
     private String senha;
+
+    @Column(name = "TELEFONE", length = 11, nullable = false)
+    private String telefone;
+
+    @Column(name = "DATA_NASCIMENTO", nullable = false)
+	private LocalDate dataNascimento;
 
     @Column(name = "ACTIVE", nullable = false)
     private Boolean active = true;
@@ -81,6 +88,22 @@ public class UsuarioEntity {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
     public Boolean getActive() {
