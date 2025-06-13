@@ -19,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import br.com.quintinno.securityapi.entity.UsuarioEntity;
 import br.com.quintinno.securityapi.repository.UsuarioRepository;
-import br.com.quintinno.securityapi.service.AutenticadorService;
+import br.com.quintinno.securityapi.service.SigninService;
 import br.com.quintinno.securityapi.service.TokenService;
 import br.com.quintinno.securityapi.transfer.ResponseTransfer;
 import br.com.quintinno.securityapi.transfer.SigninRequestTransfer;
@@ -30,7 +30,7 @@ import br.com.quintinno.securityapi.utility.MensagemUtility;
 public class AutenticadorServiceTest {
 
     @InjectMocks
-    private AutenticadorService autenticadorService;
+    private SigninService autenticadorService;
 
     @Mock
     private UsuarioRepository usuarioRepository;
