@@ -1,5 +1,7 @@
 package br.com.quintinno.securityapi.configuration;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,7 +37,8 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, ENDPOINT_SIGNIN).permitAll()
                         .requestMatchers(HttpMethod.POST, ENDPOINT_SIGNUP).permitAll()
                         .anyRequest().authenticated())
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                .cors(withDefaults());
         return httpSecurity.build();
     }
 
