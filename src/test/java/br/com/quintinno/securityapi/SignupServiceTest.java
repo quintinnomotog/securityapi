@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import br.com.quintinno.securityapi.entity.UsuarioEntity;
 import br.com.quintinno.securityapi.repository.UsuarioRepository;
 import br.com.quintinno.securityapi.service.SigninService;
+import br.com.quintinno.securityapi.service.SignupService;
 import br.com.quintinno.securityapi.service.TokenService;
 import br.com.quintinno.securityapi.transfer.ResponseTransfer;
 import br.com.quintinno.securityapi.transfer.SigninRequestTransfer;
@@ -27,10 +29,13 @@ import br.com.quintinno.securityapi.transfer.SignupRequestTransfer;
 import br.com.quintinno.securityapi.utility.MensagemUtility;
 
 @ExtendWith(MockitoExtension.class)
-public class AutenticadorServiceTest {
+public class SignupServiceTest {
 
     @InjectMocks
-    private SigninService autenticadorService;
+    private SignupService signupService;
+
+    @InjectMocks
+    private SigninService signinService;
 
     @Mock
     private UsuarioRepository usuarioRepository;
@@ -54,16 +59,19 @@ public class AutenticadorServiceTest {
         String tokenGerado = "token-gerado";
 
         SignupRequestTransfer signupRequestTransfer = new SignupRequestTransfer(
-                "liwaias.lurzi@email.com",
-                "liwaiasusronkountolurzi",
-                "Liwaias Usron Kount Olurzi");
+            "Liwaias Usron Kount Olurzi",
+            "liwaias.lurzi@email.com",
+            "liwaiasusronkountolurzi",
+            "99999999999",
+            LocalDate.parse("1998-01-02")
+        );
 
         when(this.usuarioRepository.findByIdentificador(signupRequestTransfer.identificador()))
                 .thenReturn(Optional.empty());
         when(this.passwordEncoder.encode(signupRequestTransfer.senha())).thenReturn(senhaEncoder);
         when(this.tokenService.generateToken(any(UsuarioEntity.class))).thenReturn(tokenGerado);
 
-        ResponseTransfer responseTransfer = this.autenticadorService.signup(signupRequestTransfer);
+        ResponseTransfer responseTransfer = this.signupService.signup(signupRequestTransfer);
 
         assertNotNull(responseTransfer);
         assertEquals("Liwaias Usron Kount Olurzi", responseTransfer.nome());
@@ -89,7 +97,7 @@ public class AutenticadorServiceTest {
         when(passwordEncoder.matches(signinRequestTransfer.senha(), usuarioEntity.getSenha())).thenReturn(true);
         when(this.tokenService.generateToken(usuarioEntity)).thenReturn(tokenGerado);
 
-        ResponseTransfer responseTransfer = this.autenticadorService.signin(signinRequestTransfer);
+        ResponseTransfer responseTransfer = this.signinService.signin(signinRequestTransfer);
 
         assertNotNull(responseTransfer);
         assertEquals("Liwaias Usron Kount Olurzi", responseTransfer.nome());
@@ -116,7 +124,7 @@ public class AutenticadorServiceTest {
         when(passwordEncoder.matches(signinRequestTransfer.senha(), usuarioEntity.getSenha())).thenReturn(true);
         when(this.tokenService.generateToken(usuarioEntity)).thenReturn(tokenGerado);
 
-        ResponseTransfer responseTransfer = this.autenticadorService.signin(signinRequestTransfer);
+        ResponseTransfer responseTransfer = this.signinService.signin(signinRequestTransfer);
 
         assertEquals(usuarioEntity.getNome(), responseTransfer.nome());
 
@@ -138,7 +146,7 @@ public class AutenticadorServiceTest {
         when(this.usuarioRepository.findByIdentificador(usuarioEntity.getIdentificador())).thenReturn(Optional.of(usuarioEntity));
 
         RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> {
-            this.autenticadorService.signin(signinRequestTransfer);
+            this.signinService.signin(signinRequestTransfer);
         });
 
         assertEquals(MensagemUtility.MENSAGEM_ERROR_01, runtimeException.getMessage());
@@ -162,7 +170,7 @@ public class AutenticadorServiceTest {
         when(passwordEncoder.matches(signinRequestTransfer.senha(), usuarioEntity.getSenha())).thenReturn(false);
 
         RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> {
-            this.autenticadorService.signin(signinRequestTransfer);
+            this.signinService.signin(signinRequestTransfer);
         });
 
         assertEquals(MensagemUtility.MENSAGEM_ERROR_01, runtimeException.getMessage());
